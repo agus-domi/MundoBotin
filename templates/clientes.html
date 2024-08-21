@@ -4,13 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mundo Botín</title>
-    <link rel="icon" type="image/png" href="Images/download.png">
-    <link rel="stylesheet" href="styletab.css">
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='images/download.png') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styletab.css') }}">
 </head>
 <body>
     <div class="pestaña">
         <div class="titulo">
-            <img src="Images/Icono Clientes.png" height="50">
+            <img src="{{ url_for('static', filename='images/Icono Clientes.png') }}" height="50">
             <h2>Clientes</h2>
         </div>
         <div>
@@ -65,8 +65,8 @@
                     </tbody>
                 </table>
         <div class="atras">
-            <a href="index.html">
-                <img src="Images/atras.png" height="50">
+            <a href="{{ url_for('index')}}">
+                <img src="{{ url_for('static', filename='images/atras.png') }}" height="50">
             </a>
         </div>
     </div>

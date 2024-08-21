@@ -4,15 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mundo Botín</title>
-    <link rel="icon" type="image/png" href="Images/download.png">
-    <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='images/download.png') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
     <div class="contenedor">
         <div class="titulo">
-            <img src="Images/Icono Clientes.png" height="70">
+            <img src="{{ url_for('static', filename='images/Icono Clientes.png') }}" height="70">
             <h2>Clientes</h2>
-            <a href="clientes.html">
+            <a href="{{ url_for('clientes')}}">
                 <button name="button" >Ir</button>
             </a>
         </div>
@@ -22,9 +22,9 @@
     </div>
     <div class="contenedor">
         <div class="titulo">
-            <img src="Images/Icono Productos.png" height="70">
+            <img src="{{ url_for('static', filename='images/Icono Productos.png') }}" height="70">
             <h2>Productos</h2>
-            <a href="productos.html">
+            <a href="{{ url_for('productos')}}">
                 <button name="button" >Ir</button>
             </a>
         </div>
@@ -34,9 +34,9 @@
     </div>
     <div class="contenedor">
         <div class="titulo">
-            <img src="Images/Icono Pedidos.png" height="70">
+            <img src="{{ url_for('static', filename='images/Icono Pedidos.png') }}" height="70">
             <h2>Pedidos</h2>
-            <a href="pedidos.html">
+            <a href="{{ url_for('pedidos')}}">
                 <button name="button" >Ir</button>
             </a>
         </div>
