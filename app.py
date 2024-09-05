@@ -102,6 +102,8 @@ def clientes():
     clientes = listar_clientes()
     return render_template('clientes.html', clientes=clientes)
 
+
+
 # Listar productos
 def listar_productos():
     query = "SELECT * FROM Producto"
@@ -109,11 +111,47 @@ def listar_productos():
     productos = cursor.fetchall()
     return productos
 
+# Función para agregar un producto
+def alta_producto(talle, marca, precio):
+    query = "INSERT INTO Producto (Talle, Marca, Precio) VALUES (%s, %s, %s)"
+    cursor.execute(query, (talle, marca, precio))
+    conexion.commit()
+    print("Producto agregado con éxito")
+
+# Ruta para manejar el formulario de alta de productos
+@app.route('/alta_producto', methods=['POST'])
+def alta_producto_route():
+    talle = request.form['talle']
+    marca = request.form['marca']
+    precio = request.form['precio']
+    
+    alta_producto(talle, marca, precio)
+    
+    return redirect(url_for('productos'))
+
+# Función para eliminar un producto
+def eliminar_producto(id_producto):
+    query = "DELETE FROM Producto WHERE ID_Producto = %s"
+    cursor.execute(query, (id_producto,))
+    conexion.commit()
+    print("Producto eliminado con éxito")
+
+# Ruta para eliminar un producto
+@app.route('/eliminar_producto/<id_producto>', methods=['POST'])
+def eliminar_producto_route(id_producto):
+    eliminar_producto(id_producto)
+    return redirect(url_for('productos'))
+
+
 # Menú de productos
 @app.route('/productos')
 def productos():
     productos = listar_productos()
     return render_template('productos.html', productos=productos)
+
+
+
+
 
 # Listar pedidos
 def listar_pedidos():
