@@ -31,31 +31,13 @@
                     </tr>
                 </thead>
                 <tbody>
+                    {% for producto in productos %}
                     <tr>
-                        <td>44</td>
-                        <td>Nike</td>
-                        <td>500</td>
+                        <td>{{ producto[1] }}</td> <!-- Talle -->
+                        <td>{{ producto[2] }}</td> <!-- Marca -->
+                        <td>{{ producto[3] }}</td> <!-- Precio -->
                     </tr>
-                    <tr>
-                        <td>39</td>
-                        <td>Adidas</td>
-                        <td>600</td>
-                    </tr>
-                    <tr>
-                        <td>50</td>
-                        <td>Puma</td>
-                        <td>700</td>
-                    </tr>
-                    <tr>
-                        <td>27</td>
-                        <td>Topper</td>
-                        <td>400</td>
-                    </tr>
-                    <tr>
-                        <td>41</td>
-                        <td>Kappa</td>
-                        <td>550</td>
-                    </tr>
+                    {% endfor %}
                 </tbody>
             </table>
         <div class="atras">

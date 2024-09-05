@@ -21,42 +21,50 @@
             <button>Modificar Pedido</button>
             <button>Eliminar Pedido</button>
         </div>
-        <div class="titulo">
-            <h3>Cliente</h3>
-            <select>
-                <option value="cristian">Cristian</option>
-                <!-- Añade más opciones si es necesario -->
-            </select>
-        </div>
+        <form method="POST">
+            <div class="titulo">
+                <h3>Cliente</h3>
+                <select name="cliente_id">
+                    <option value="">Seleccione un cliente</option>
+                    {% for cliente in clientes %}
+                        <option value="{{ cliente[0] }}" {% if cliente[0] == selected_cliente %}selected{% endif %}>
+                            {{ cliente[2] }} {{ cliente[3] }}
+                        </option>
+                    {% endfor %}
+                </select>
+                <button type="submit">Filtrar</button>
+                <h3>{{ cliente_info[0] }} {{ cliente_info[1] }}</h3>
+            </div>
+        </form>
+        {% if cliente_info %}
+        {% endif %}
         <div class="tabla">
             <table>
                 <thead>
                     <tr>
                         <th>Fecha</th>
-                        <th>Productos</th>
-                        <th>Monto</th>
+                        <th>Producto</th>
+                        <th>Precio</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>05/08/2024</td>
-                        <td>Nike</td>
-                        <td>1000</td>
-                    </tr>
-                    <tr>
-                        <td>05/08/2024</td>
-                        <td>Adidas</td>
-                        <td>2000</td>
-                    </tr>
-                    <tr>
-                        <td>05/08/2024</td>
-                        <td>NB</td>
-                        <td>1500</td>
-                    </tr>
+                    {% if pedidos %}
+                        {% for pedido in pedidos %}
+                        <tr>
+                            <td>{{ pedido[0] }}</td>
+                            <td>{{ pedido[1] }}</td>
+                            <td>{{ pedido[2] }}</td>
+                        </tr>
+                        {% endfor %}
+                    {% else %}
+                        <tr>
+                            <td colspan="3">No hay pedidos para este cliente</td>
+                        </tr>
+                    {% endif %}
                 </tbody>
             </table>
             <div class="total">
-                <span>3500</span>
+                <span>Total: {{ total }}</span>
             </div>
         </div>
         <div class="botones">

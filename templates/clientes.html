@@ -17,10 +17,25 @@
             <p>Gestiona tus clientes de manera eficiente.</p>
         </div>
         <div class="botones">
-            <button>Cargar Cliente</button>
-            <button>Modificar Cliente</button>
-            <button>Eliminar Cliente</button>
+            <button onclick="document.getElementById('formulario-alta').style.display='block'">Cargar Cliente</button>
         </div>
+         <!-- Formulario para agregar nuevo cliente -->
+          <div id="formulario-alta" style="display:none;">
+            <form action="{{ url_for('alta_cliente_route') }}" method="POST">
+                <label for="dni">DNI:</label>
+                <input type="text" id="dni" name="dni" required><br>
+                <label for="nombre">Nombre:</label>
+                <input type="text" id="nombre" name="nombre" required><br>
+                <label for="apellido">Apellido:</label>
+                <input type="text" id="apellido" name="apellido" required><br>
+                <label for="direccion">Dirección:</label>
+                <input type="text" id="direccion" name="direccion" required><br>
+                <label for="contacto">Contacto:</label>
+                <input type="text" id="contacto" name="contacto" required><br>
+                <input type="submit" value="Agregar Cliente">
+            </form>
+        </div>
+    
         <div class="tabla">
             <div class="tabla">
                 <table>
@@ -34,34 +49,23 @@
                         </tr>
                     </thead>
                     <tbody>
+                        {% for cliente in clientes %}
                         <tr>
-                            <td>47934336</td>
-                            <td>Lucas</td>
-                            <td>Perez</td>
-                            <td>Hipolito Yrigoyen 341</td>
-                            <td>lucas@gmail.com</td>
+                            <td>{{ cliente[1] }}</td> <!-- DNI -->
+                            <td>{{ cliente[2] }}</td> <!-- Nombre -->
+                            <td>{{ cliente[3] }}</td> <!-- Apellido -->
+                            <td>{{ cliente[4] }}</td> <!-- Dirección -->
+                            <td>{{ cliente[5] }}</td> <!-- Contacto -->
+                            <td class="modificar-col">
+                                <a class="modificar-btn" href="{{ url_for('editar_cliente_route', dni=cliente[1]) }}">Modificar</a>
+                            </td>
+                            <td class="eliminar-col">
+                                <form action="{{ url_for('eliminar_cliente_route', dni=cliente[1]) }}" method="POST" style="display:inline;">
+                                    <button type="submit" class="eliminar-btn" onclick="return confirmarEliminacion()">Eliminar</button>
+                                </form>
+                            </td>
                         </tr>
-                        <tr>
-                            <td>47988083</td>
-                            <td>Agustín</td>
-                            <td>Gomez</td>
-                            <td>Mitre 843</td>
-                            <td>agustin@gmail.com</td>
-                        </tr>
-                        <tr>
-                            <td>47309148</td>
-                            <td>Jesús</td>
-                            <td>Rodríguez</td>
-                            <td>Marcelo T. de Alvear 333</td>
-                            <td>jesus@gmail.com</td>
-                        </tr>
-                        <tr>
-                            <td>45321123</td>
-                            <td>Juan</td>
-                            <td>Perez</td>
-                            <td>null</td>
-                            <td>null</td>
-                        </tr>
+                        {% endfor %}
                     </tbody>
                 </table>
         <div class="atras">

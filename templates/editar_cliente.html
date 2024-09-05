@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar Cliente</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styletab.css') }}">
+</head>
+<body>
+    <div class="pestaña">
+        <div class="titulo">
+            <img src="{{ url_for('static', filename='images/Icono Clientes.png') }}" height="50">
+            <h2>Editar Cliente</h2>
+        </div>
+        
+        <div id="formulario-edicion">
+            <form action="{{ url_for('editar_cliente_route', dni=cliente[1]) }}" method="POST">
+                <label for="dni">DNI:</label>
+                <input type="text" id="dni" name="dni" value="{{ cliente[1] }}" required><br>
+
+                <label for="nombre">Nombre:</label>
+                <input type="text" id="nombre" name="nombre" value="{{ cliente[2] }}" required><br>
+
+                <label for="apellido">Apellido:</label>
+                <input type="text" id="apellido" name="apellido" value="{{ cliente[3] }}" required><br>
+
+                <label for="direccion">Dirección:</label>
+                <input type="text" id="direccion" name="direccion" value="{{ cliente[4] }}" required><br>
+
+                <label for="contacto">Contacto:</label>
+                <input type="text" id="contacto" name="contacto" value="{{ cliente[5] }}" required><br>
+
+                <input type="submit" value="Guardar Cambios">
+            </form>
+        </div>
+        <div class="atras">
+            <a href="{{ url_for('clientes')}}">
+                <img src="{{ url_for('static', filename='images/atras.png') }}" height="50">
+            </a>
+        </div>
+    </div>
+</body>
+</html>
