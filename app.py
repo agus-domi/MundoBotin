@@ -24,6 +24,11 @@ def listar_clientes():
     cursor.execute(query)
     clientes = cursor.fetchall()
     return clientes
+# Menú de clientes
+@app.route('/clientes')
+def clientes():
+    clientes = listar_clientes()
+    return render_template('clientes.html', clientes=clientes)
 
 # Función para agregar un cliente
 def alta_cliente(dni, nombre, apellido, direccion, contacto):
@@ -95,12 +100,6 @@ def eliminar_cliente(dni):
 def eliminar_cliente_route(dni):
     eliminar_cliente(dni)
     return redirect(url_for('clientes'))
-
-# Menú de clientes
-@app.route('/clientes')
-def clientes():
-    clientes = listar_clientes()
-    return render_template('clientes.html', clientes=clientes)
 
 
 
