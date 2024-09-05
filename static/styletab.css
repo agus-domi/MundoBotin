@@ -76,7 +76,11 @@ th {
     margin-top: 20px;
     text-align: left;
 }
-/* Solo centrar el contenido de la columna que tiene el botón de eliminar */
+/* Solo centrar el contenido de la columna que tiene el botón de eliminar y modificar */
+.modificar-col {
+    text-align: center; /* Centra solo los botones de modificar */
+    vertical-align: middle; /* Alinea verticalmente el botón en el centro */
+}
 .eliminar-col {
     text-align: center; /* Centra solo los botones de eliminar */
     vertical-align: middle; /* Alinea verticalmente el botón en el centro */

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar Producto</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styletab.css') }}">
+</head>
+<body>
+    <div class="pestaña">
+        <div class="titulo">
+            <img src="{{ url_for('static', filename='images/Icono Productos.png') }}" height="50">
+        <h2>Editar Producto</h2>
+        </div>
+
+        <div id="formulario-edicion">
+            <form action="{{ url_for('editar_producto_route', id_producto=producto[0]) }}" method="POST">
+                <label for="talle">Talle:</label>
+                <input type="text" id="talle" name="talle" value="{{ producto[1] }}" required><br>
+                
+                <label for="marca">Marca:</label>
+                <input type="text" id="marca" name="marca" value="{{ producto[2] }}" required><br>
+                
+                <label for="precio">Precio:</label>
+                <input type="text" id="precio" name="precio" value="{{ producto[3] }}" required><br>
+                
+                <input type="submit" value="Guardar Cambios">
+            </form>
+        </div>
+        <div class="atras">
+            <a href="{{ url_for('productos') }}">
+                <img src="{{ url_for('static', filename='images/atras.png') }}" height="50">
+            </a>
+        </div>
+    </div>
+</body>
+</html>

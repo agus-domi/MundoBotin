@@ -128,6 +128,46 @@ def alta_producto_route():
     
     return redirect(url_for('productos'))
 
+
+# Función para obtener los datos de un producto
+def obtener_producto(id_producto):
+    query = "SELECT * FROM Producto WHERE ID_Producto = %s"
+    cursor.execute(query, (id_producto,))
+    producto = cursor.fetchone()
+    return producto
+
+# Función para modificar un producto
+def modificar_producto(id_producto, talle, marca, precio):
+    query = """
+        UPDATE Producto 
+        SET Talle = %s, Marca = %s, Precio = %s
+        WHERE ID_Producto = %s
+    """
+    cursor.execute(query, (talle, marca, precio, id_producto))
+    conexion.commit()
+    print("Producto modificado con éxito")
+
+# Ruta para mostrar el formulario de edición de producto
+@app.route('/editar_producto/<id_producto>', methods=['GET', 'POST'])
+def editar_producto_route(id_producto):
+    producto = obtener_producto(id_producto)
+    
+    if request.method == 'POST':
+        # Obtener los datos modificados del formulario
+        talle = request.form['talle']
+        marca = request.form['marca']
+        precio = request.form['precio']
+        
+        # Llamar a la función para actualizar el producto
+        modificar_producto(id_producto, talle, marca, precio)
+        
+        return redirect(url_for('productos'))
+    
+    return render_template('editar_producto.html', producto=producto)
+
+
+
+
 # Función para eliminar un producto
 def eliminar_producto(id_producto):
     query = "DELETE FROM Producto WHERE ID_Producto = %s"

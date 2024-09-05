@@ -46,6 +46,9 @@
                         <td>{{ producto[1] }}</td> <!-- Talle -->
                         <td>{{ producto[2] }}</td> <!-- Marca -->
                         <td>{{ producto[3] }}</td> <!-- Precio -->
+                        <td class="modificar-col">
+                            <a class="modificar-btn" href="{{ url_for('editar_producto_route', id_producto=producto[0]) }}">Modificar</a>
+                        </td>
                         <td class="eliminar-col">
                             <form action="{{ url_for('eliminar_producto_route', id_producto=producto[0]) }}" method="POST" style="display:inline;">
                                 <button type="submit" class="eliminar-btn" onclick="return confirmarEliminacion()">Eliminar</button>
