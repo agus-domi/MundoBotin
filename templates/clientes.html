@@ -21,7 +21,7 @@
         </div>
          <!-- Formulario para agregar nuevo cliente -->
           <div id="formulario-alta" style="display:none;">
-            <form action="{{ url_for('alta_cliente_route') }}" method="POST">
+            <form action="{{ url_for('alta_cliente') }}" method="POST">
                 <label for="dni">DNI:</label>
                 <input type="text" id="dni" name="dni" required><br>
                 <label for="nombre">Nombre:</label>
@@ -60,7 +60,7 @@
                                 <a class="modificar-btn" href="{{ url_for('editar_cliente_route', dni=cliente[1]) }}">Modificar</a>
                             </td>
                             <td class="eliminar-col">
-                                <form action="{{ url_for('eliminar_cliente_route', dni=cliente[1]) }}" method="POST" style="display:inline;">
+                                <form action="{{ url_for('eliminar_cliente_route', id_cliente=cliente[0]) }}" method="POST" style="display:inline;">
                                     <button type="submit" class="eliminar-btn" onclick="return confirmarEliminacion()">Eliminar</button>
                                 </form>
                             </td>

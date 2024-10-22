@@ -18,36 +18,28 @@ app = Flask(__name__)
 def index():
     return render_template('index.html')
 
-# Listar clientes
-def listar_clientes():
-    query = "SELECT * FROM Cliente"
-    cursor.execute(query)
-    clientes = cursor.fetchall()
-    return clientes
 # Menú de clientes
 @app.route('/clientes')
 def clientes():
-    clientes = listar_clientes()
+    query = "SELECT * FROM Cliente"
+    cursor.execute(query)
+    clientes = cursor.fetchall()
     return render_template('clientes.html', clientes=clientes)
 
-# Función para agregar un cliente
-def alta_cliente(dni, nombre, apellido, direccion, contacto):
-    query = "INSERT INTO Cliente (DNI, Nombre, Apellido, Direccion, Contacto) VALUES (%s, %s, %s, %s, %s)"
-    cursor.execute(query, (dni, nombre, apellido, direccion, contacto))
-    conexion.commit()
-    print("Cliente agregado con éxito")
 
-# Ruta para manejar el formulario de alta de clientes
+# Agregar un Cliente
 @app.route('/alta_cliente', methods=['POST'])
-def alta_cliente_route():
+def alta_cliente(): #Obtengo los datos del Formulario
     dni = request.form['dni']
     nombre = request.form['nombre']
     apellido = request.form['apellido']
     direccion = request.form['direccion']
     contacto = request.form['contacto']
     
-    alta_cliente(dni, nombre, apellido, direccion, contacto)
-    
+    #Lo agrego a la Base de Datos
+    query = "INSERT INTO Cliente (DNI, Nombre, Apellido, Direccion, Contacto) VALUES (%s, %s, %s, %s, %s)"
+    cursor.execute(query, (dni, nombre, apellido, direccion, contacto))
+    conexion.commit()
     return redirect(url_for('clientes'))
 
 # Función para obtener los datos de un cliente
@@ -87,47 +79,39 @@ def editar_cliente_route(dni):
     
     return render_template('editar_cliente.html', cliente=cliente)
 
-
 # Función para eliminar un cliente
-def eliminar_cliente(dni):
-    query = "DELETE FROM Cliente WHERE DNI = %s"
-    cursor.execute(query, (dni,))
+def eliminar_cliente(id_cliente):
+    query = "DELETE FROM Cliente WHERE ID_Cliente = %s"
+    cursor.execute(query, (id_cliente,))
     conexion.commit()
-    print("Cliente eliminado con éxito")
 
 # Ruta para eliminar un cliente
-@app.route('/eliminar_cliente/<dni>', methods=['POST'])
-def eliminar_cliente_route(dni):
-    eliminar_cliente(dni)
+@app.route('/eliminar_cliente/<id_cliente>', methods=['POST'])
+def eliminar_cliente_route(id_cliente):
+    eliminar_cliente(id_cliente)
     return redirect(url_for('clientes'))
 
 
-
-# Listar productos
-def listar_productos():
+# Menú de productos
+@app.route('/productos')
+def productos():
     query = "SELECT * FROM Producto"
     cursor.execute(query)
     productos = cursor.fetchall()
-    return productos
+    return render_template('productos.html', productos=productos)
 
-# Función para agregar un producto
-def alta_producto(talle, marca, precio):
-    query = "INSERT INTO Producto (Talle, Marca, Precio) VALUES (%s, %s, %s)"
-    cursor.execute(query, (talle, marca, precio))
-    conexion.commit()
-    print("Producto agregado con éxito")
-
-# Ruta para manejar el formulario de alta de productos
+# Agregar un Producto
 @app.route('/alta_producto', methods=['POST'])
-def alta_producto_route():
+def alta_producto(): #Obtengo los datos del Formulario
     talle = request.form['talle']
     marca = request.form['marca']
     precio = request.form['precio']
     
-    alta_producto(talle, marca, precio)
-    
+    #Lo agrego a la Base de Datos
+    query = "INSERT INTO Producto (Talle, Marca, Precio) VALUES (%s, %s, %s)"
+    cursor.execute(query, (talle, marca, precio))
+    conexion.commit()
     return redirect(url_for('productos'))
-
 
 # Función para obtener los datos de un producto
 def obtener_producto(id_producto):
@@ -182,14 +166,6 @@ def eliminar_producto_route(id_producto):
     return redirect(url_for('productos'))
 
 
-# Menú de productos
-@app.route('/productos')
-def productos():
-    productos = listar_productos()
-    return render_template('productos.html', productos=productos)
-
-
-
 
 
 # Listar pedidos
@@ -205,7 +181,9 @@ def pedidos():
     selected_cliente = request.form.get('cliente_id', '')
 
     # Obtener clientes
-    clientes = listar_clientes()
+    query = "SELECT * FROM Cliente"
+    cursor.execute(query)
+    clientes = cursor.fetchall()
 
     # Obtener nombre y apellido del cliente seleccionado
     cliente_info = None
