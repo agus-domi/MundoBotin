@@ -19,8 +19,8 @@
         <div class="botones">
             <button onclick="document.getElementById('formulario-alta').style.display='block'">Cargar Cliente</button>
         </div>
-         <!-- Formulario para agregar nuevo cliente -->
-          <div id="formulario-alta" style="display:none;">
+        <!-- Formulario para agregar nuevo cliente -->
+        <div id="formulario-alta" style="display:none;">
             <form action="{{ url_for('alta_cliente') }}" method="POST">
                 <label for="dni">DNI:</label>
                 <input type="text" id="dni" name="dni" required><br>

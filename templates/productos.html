@@ -19,9 +19,9 @@
         <div class="botones">
             <button onclick="document.getElementById('formulario-alta').style.display='block'">Cargar Producto</button>
         </div>
-         <!-- Formulario para agregar nuevo producto -->
-          <div id="formulario-alta" style="display:none;">
-            <form action="{{ url_for('alta_producto_route') }}" method="POST">
+        <!-- Formulario para agregar nuevo producto -->
+        <div id="formulario-alta" style="display:none;">
+            <form action="{{ url_for('alta_producto') }}" method="POST">
                 <label for="talle">Talle:</label>
                 <input type="text" id="talle" name="talle" required><br>
                 <label for="marca">Marca:</label>
