@@ -202,7 +202,7 @@ def pedidos():
     total = 0
     if cliente_info:
         query_pedidos = """
-        SELECT p.Fecha, pr.Marca, pr.Precio
+        SELECT p.ID_Pedido, p.Fecha, pr.Marca, pr.Precio
         FROM Pedido p
         JOIN Tiene t ON p.ID_Pedido = t.ID_Pedido
         JOIN Producto pr ON t.ID_Producto = pr.ID_Producto
@@ -210,7 +210,7 @@ def pedidos():
         """
         cursor.execute(query_pedidos, (selected_cliente,))
         pedidos = cursor.fetchall()
-        total = sum(pedido[2] for pedido in pedidos)
+        total = sum(pedido[3] for pedido in pedidos)  # Actualiza el índice a 3 para obtener el precio
 
     return render_template(
         'pedidos.html', pedidos=pedidos, clientes=clientes, productos=productos,
@@ -219,10 +219,11 @@ def pedidos():
     )
 
 
+
 @app.route('/agregar_pedido', methods=['POST'])
 def agregar_pedido():
     cliente_id = request.form['cliente_id']
-    producto_id = request.form['producto_id']
+    productos_ids = request.form.getlist('producto_id')  # Lista de productos seleccionados
     fecha = datetime.now().strftime('%Y-%m-%d')  # Fecha actual
 
     # Insertar el pedido en la tabla Pedido
@@ -232,46 +233,42 @@ def agregar_pedido():
 
     # Obtener el ID del nuevo pedido
     pedido_id = cursor.lastrowid
+    total_monto = 0
 
-    # Insertar el producto en la tabla Tiene
-    query_tiene = "INSERT INTO Tiene (ID_Pedido, ID_Producto) VALUES (%s, %s)"
-    cursor.execute(query_tiene, (pedido_id, producto_id))
-    conexion.commit()
+    # Insertar cada producto seleccionado en la tabla Tiene y calcular el total
+    for producto_id in productos_ids:
+        query_tiene = "INSERT INTO Tiene (ID_Pedido, ID_Producto) VALUES (%s, %s)"
+        cursor.execute(query_tiene, (pedido_id, producto_id))
+        
+        # Obtener el precio del producto y sumarlo al monto total
+        query_precio = "SELECT Precio FROM Producto WHERE ID_Producto = %s"
+        cursor.execute(query_precio, (producto_id,))
+        precio = cursor.fetchone()[0]
+        total_monto += precio
 
-    # Calcular el monto total sumando el precio del producto
-    query_precio = "SELECT Precio FROM Producto WHERE ID_Producto = %s"
-    cursor.execute(query_precio, (producto_id,))
-    precio = cursor.fetchone()[0]
-
-    # Actualizar el monto en el pedido
-    query_actualizar_monto = "UPDATE Pedido SET Monto = Monto + %s WHERE ID_Pedido = %s"
-    cursor.execute(query_actualizar_monto, (precio, pedido_id))
+    # Actualizar el monto total en el pedido
+    query_actualizar_monto = "UPDATE Pedido SET Monto = %s WHERE ID_Pedido = %s"
+    cursor.execute(query_actualizar_monto, (total_monto, pedido_id))
     conexion.commit()
 
     return redirect(url_for('pedidos'))
 
-# Ruta para eliminar un producto específico de un pedido
-@app.route('/eliminar_producto_pedido/<int:pedido_id>/<int:producto_id>', methods=['POST'])
-def eliminar_producto_pedido(pedido_id, producto_id):
-    # Eliminar la relación del producto en el pedido en la tabla 'Tiene'
-    query = "DELETE FROM Tiene WHERE ID_Pedido = %s AND ID_Producto = %s"
-    cursor.execute(query, (pedido_id, producto_id))
+# Ruta para eliminar un pedido
+@app.route('/eliminar_pedido', methods=['POST'])
+def eliminar_pedido():
+    pedido_id = request.form.get('ID')
+    # Primero, elimina todas las relaciones de productos del pedido en la tabla 'Tiene'
+    query_eliminar_tiene = 'DELETE FROM Tiene WHERE ID_Pedido = %s'
+    cursor.execute(query_eliminar_tiene, (pedido_id,))
+        
+    # Luego, elimina el pedido de la tabla 'Pedido'
+    query_eliminar_pedido = 'DELETE FROM Pedido WHERE ID_Pedido = %s'
+    cursor.execute(query_eliminar_pedido, (pedido_id,))
+        
+    # Confirma los cambios
     conexion.commit()
     
-    # Recalcular el monto total del pedido después de la eliminación
-    query_total = """
-        UPDATE Pedido
-        SET Monto = (
-            SELECT COALESCE(SUM(pr.Precio), 0)
-            FROM Tiene t
-            JOIN Producto pr ON t.ID_Producto = pr.ID_Producto
-            WHERE t.ID_Pedido = %s
-        )
-        WHERE ID_Pedido = %s
-    """
-    cursor.execute(query_total, (pedido_id, pedido_id))
-    conexion.commit()
-    
+    # Redirige a la página de pedidos
     return redirect(url_for('pedidos'))
 
 

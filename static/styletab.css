@@ -124,7 +124,7 @@ th {
 
 
 /* Estilo para el formulario de Cargar Cliente */
-#formulario-alta {
+#formulario-alta, #formulario-eliminar {
     background: #f0f2f5; /* Fondo suave */
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -134,7 +134,7 @@ th {
     max-width: 500px; /* Limita el ancho del formulario */
 }
 
-#formulario-alta label {
+#formulario-alta label, #formulario-eliminar label {
     display: inline-block;
     width: 80px; /* Alinea las etiquetas a la izquierda con espacio fijo */
     font-size: 14px;
@@ -142,7 +142,7 @@ th {
     margin-bottom: 10px;
 }
 
-#formulario-alta input[type="text"] {
+#formulario-alta input[type="text"], #formulario-eliminar input[type="text"] {
     width: calc(100% - 90px); /* Ajusta el ancho del campo de texto */
     padding: 8px;
     margin-bottom: 10px;
@@ -152,7 +152,7 @@ th {
     box-sizing: border-box;
 }
 
-#formulario-alta input[type="submit"] {
+#formulario-alta input[type="submit"], #formulario-eliminar input[type="submit"] {
     background: #4e54c8;
     color: white;
     border: none;
@@ -164,7 +164,7 @@ th {
     font-size: 14px;
 }
 
-#formulario-alta input[type="submit"]:hover {
+#formulario-alta input[type="submit"]:hover, #formulario-eliminar input[type="submit"]:hover {
     background: #8f94fb;
 }
 
