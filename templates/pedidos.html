@@ -17,9 +17,35 @@
             <p>Gestiona tus pedidos de manera eficiente.</p>
         </div>
         <div class="botones">
-            <button>Cargar Pedido</button>
+            <button onclick="document.getElementById('formulario-alta').style.display='block'">Cargar Pedido</button>
             <button>Modificar Pedido</button>
             <button>Eliminar Pedido</button>
+        </div>
+        <div id="formulario-alta" style="display:none;">
+            <form method="POST" action="{{ url_for('agregar_pedido') }}">
+                <label for="cliente_id">Seleccionar Cliente:</label>
+                <select name="cliente_id" id="cliente_id" required>
+                    <option value="">Seleccione un cliente</option>
+                    {% for cliente in clientes %}
+                        <option value="{{ cliente[0] }}" {% if cliente[0] == selected_cliente %}selected{% endif %}>
+                            {{ cliente[2] }} {{ cliente[3] }}
+                        </option>
+                    {% endfor %}
+                </select><br>
+            
+                <label for="producto_id">Seleccionar Producto:</label>
+                <select name="producto_id" id="producto_id" required>
+                    <option value="">Seleccione un producto</option>
+                    {% for producto in productos %}
+                        <option value="{{ producto[0] }}">{{ producto[2] }} - ${{ producto[3] }}</option>
+                    {% endfor %}
+                </select><br>
+            
+                <label for="fecha">Fecha:</label>
+                <input type="date" name="fecha" id="fecha" value="{{ fecha_actual }}" readonly><br>
+            
+                <input type="submit" value="Agregar Pedido">
+            </form>
         </div>
         <form method="POST">
             <div class="titulo">
