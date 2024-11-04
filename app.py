@@ -202,7 +202,7 @@ def pedidos():
     total = 0
     if cliente_info:
         query_pedidos = """
-        SELECT p.ID_Pedido, p.Fecha, pr.Marca, pr.Precio
+        SELECT p.ID_Pedido, p.Fecha, pr.Marca, pr.Precio, pr.ID_Producto
         FROM Pedido p
         JOIN Tiene t ON p.ID_Pedido = t.ID_Pedido
         JOIN Producto pr ON t.ID_Producto = pr.ID_Producto
@@ -270,6 +270,29 @@ def eliminar_pedido():
     
     # Redirige a la página de pedidos
     return redirect(url_for('pedidos'))
+
+@app.route('/eliminar_producto_pedido', methods=['POST'])
+def eliminar_producto_pedido():
+    pedido_id = request.form.get('pedido_id')
+    producto_id = request.form.get('producto_id')
+    
+    # Elimina el producto específico del pedido en la tabla 'Tiene'
+    query = "DELETE FROM Tiene WHERE ID_Pedido = %s AND ID_Producto = %s"
+    cursor.execute(query, (pedido_id, producto_id))
+    
+    # Actualiza el monto total del pedido restando el precio del producto eliminado
+    query_precio = "SELECT Precio FROM Producto WHERE ID_Producto = %s"
+    cursor.execute(query_precio, (producto_id,))
+    precio = cursor.fetchone()[0]
+    
+    query_actualizar_monto = "UPDATE Pedido SET Monto = Monto - %s WHERE ID_Pedido = %s"
+    cursor.execute(query_actualizar_monto, (precio, pedido_id))
+    
+    # Confirma los cambios
+    conexion.commit()
+    
+    return redirect(url_for('pedidos'))
+
 
 
 if __name__ == '__main__':
