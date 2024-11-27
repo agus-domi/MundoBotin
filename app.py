@@ -294,6 +294,41 @@ def eliminar_producto_pedido():
     return redirect(url_for('pedidos'))
 
 
+@app.route('/modificar_pedido', methods=['POST'])
+def modificar_pedido():
+    pedido_id = request.form.get('pedido_id')  # ID del pedido a modificar
+    nuevo_producto_id = request.form.get('nuevo_producto_id')  # ID del nuevo producto
+
+    # Obtener el precio del producto actual
+    query_precio_actual = """
+        SELECT pr.Precio 
+        FROM Tiene t
+        JOIN Producto pr ON t.ID_Producto = pr.ID_Producto
+        WHERE t.ID_Pedido = %s
+    """
+    cursor.execute(query_precio_actual, (pedido_id,))
+    precio_actual = cursor.fetchone()[0]
+
+    # Obtener el precio del nuevo producto
+    query_precio_nuevo = "SELECT Precio FROM Producto WHERE ID_Producto = %s"
+    cursor.execute(query_precio_nuevo, (nuevo_producto_id,))
+    precio_nuevo = cursor.fetchone()[0]
+
+    # Actualizar el producto en la tabla "Tiene"
+    query_actualizar_producto = "UPDATE Tiene SET ID_Producto = %s WHERE ID_Pedido = %s"
+    cursor.execute(query_actualizar_producto, (nuevo_producto_id, pedido_id))
+
+    # Actualizar el monto total del pedido en la tabla "Pedido"
+    diferencia_precio = precio_nuevo - precio_actual
+    query_actualizar_monto = "UPDATE Pedido SET Monto = Monto + %s WHERE ID_Pedido = %s"
+    cursor.execute(query_actualizar_monto, (diferencia_precio, pedido_id))
+
+    # Confirmar cambios en la base de datos
+    conexion.commit()
+
+    return redirect(url_for('pedidos'))
+
+
 
 if __name__ == '__main__':
     app.run(debug=True)

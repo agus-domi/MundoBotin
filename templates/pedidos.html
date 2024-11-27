@@ -18,7 +18,6 @@
         </div>
         <div class="botones">
             <button onclick="document.getElementById('formulario-alta').style.display='block'">Cargar Pedido</button>
-            <button>Modificar Pedido</button>
             <button onclick="document.getElementById('formulario-eliminar').style.display='block'">Eliminar Pedido</button>
         </div>
         <div id="formulario-alta" style="display:none;">
@@ -91,6 +90,20 @@
                             <td>{{ pedido[1] }}</td>
                             <td>{{ pedido[2] }}</td>
                             <td>{{ pedido[3] }}</td>
+                            <td class="modificar-col">
+                                <!-- Formulario para modificar el producto del pedido -->
+                                <form action="{{ url_for('modificar_pedido') }}" method="POST">
+                                    <input type="hidden" name="pedido_id" value="{{ pedido[0] }}">
+                                    <label for="nuevo_producto_{{ pedido[0] }}">Nuevo Producto:</label>
+                                    <select name="nuevo_producto_id" id="nuevo_producto_{{ pedido[0] }}" required>
+                                        <option value="">Seleccione un producto</option>
+                                        {% for producto in productos %}
+                                        <option value="{{ producto[0] }}">{{ producto[2] }} - ${{ producto[3] }}</option>
+                                        {% endfor %}
+                                    </select>
+                                    <button type="submit" class="modificar-btn">Modificar</button>
+                                </form>
+                            </td>
                             <td class="eliminar-col">
                                 <form action="{{ url_for('eliminar_producto_pedido') }}" method="POST">
                                     <input type="hidden" name="pedido_id" value="{{ pedido[0] }}">
@@ -102,7 +115,7 @@
                         {% endfor %}
                     {% else %}
                     <tr>
-                        <td colspan="5">No hay pedidos para este cliente</td>
+                        <td colspan="6">No hay pedidos para este cliente</td>
                     </tr>
                     {% endif %}
                 </tbody>
@@ -110,9 +123,6 @@
             <div class="total">
                 <span>Total: {{ total }}</span>
             </div>
-        </div>
-        <div class="botones">
-            <button>+</button>
         </div>
         <div class="atras">
             <a href="{{ url_for('index')}}">
