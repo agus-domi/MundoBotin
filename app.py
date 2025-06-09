@@ -4,10 +4,10 @@ import pymysql
 
 # Conexión a la base de datos
 conexion = pymysql.connect(
-    host="bd3jbk6nhwhrlda9k8xm-mysql.services.clever-cloud.com",
-    user="uxynm85rauhe3m0g",
-    password="SEpLfM7642MAPjmODuH9",
-    database="bd3jbk6nhwhrlda9k8xm",
+    host="bydjfabyyg9qzvks4csv-mysql.services.clever-cloud.com",
+    user="ubybixiwsih8oq3v",
+    password="l4ShzAcWnLhNlnEIDbmO",
+    database="bydjfabyyg9qzvks4csv",
     cursorclass=pymysql.cursors.Cursor
 )
 
