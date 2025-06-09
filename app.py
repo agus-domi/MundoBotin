@@ -13,7 +13,9 @@ conexion = pymysql.connect(
 
 cursor = conexion.cursor()
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder='static', static_url_path='/static')
+# static_folder: la ruta real de la carpeta (relativa al archivo actual)
+# static_url_path: la URL a la que se accederán los archivos estáticos
 
 # Página principal
 @app.route('/', methods=['GET'])
