@@ -1,13 +1,14 @@
 from flask import Flask, render_template, request, redirect, url_for
 from datetime import datetime
-import mysql.connector
+import pymysql
 
 # Conexión a la base de datos
-conexion = mysql.connector.connect(
-    host="bgfxs8zjfhryjvdjvfn7-mysql.services.clever-cloud.com",
+conexion = pymysql.connect(
+    host="bd3jbk6nhwhrlda9k8xm-mysql.services.clever-cloud.com",
     user="uxynm85rauhe3m0g",
     password="SEpLfM7642MAPjmODuH9",
-    database="bgfxs8zjfhryjvdjvfn7"
+    database="bd3jbk6nhwhrlda9k8xm",
+    cursorclass=pymysql.cursors.Cursor
 )
 
 cursor = conexion.cursor()
