@@ -34,32 +34,32 @@ El sistema está orientado a pequeñas empresas que buscan una solución simple 
 ## 📸 Capturas de pantalla
 
 ### 🔷 Página principal (Inicio)
-![Index](https://github.com/user-attachments/assets/ad853be6-de44-454f-ae2d-58255983eef1)
+<img src="https://github.com/user-attachments/assets/ad853be6-de44-454f-ae2d-58255983eef1" width="600"/>
 
 ---
 
 ### 👥 Gestión de Clientes
-![Clientes](https://github.com/user-attachments/assets/2f01fb0a-cb95-4fa6-9f51-38d12abd7a06)
-
----
-
-### 🛍️ Gestión de Productos
-![Productos](https://github.com/user-attachments/assets/cbaf7e36-e656-4100-979e-d3684a7798d3)
-
----
-
-### 📦 Gestión de Pedidos
-![Pedidos](https://github.com/user-attachments/assets/b9ed2d87-1e83-4744-b6a5-541393ae5d8e)
+<img src="https://github.com/user-attachments/assets/2f01fb0a-cb95-4fa6-9f51-38d12abd7a06" width="600"/>
 
 ---
 
 ### ➕ Cargar nuevo elemento
-![Cargar](https://github.com/user-attachments/assets/be13bd20-76d1-48a1-b01a-55e49ce16d9e)
+<img src="https://github.com/user-attachments/assets/be13bd20-76d1-48a1-b01a-55e49ce16d9e" width="600"/>
 
 ---
 
 ### 🔄 Modificar elemento existente
-![Modificar](https://github.com/user-attachments/assets/e61cd060-700d-40d0-ad3c-94ffc9d6731d)
+<img src="https://github.com/user-attachments/assets/e61cd060-700d-40d0-ad3c-94ffc9d6731d" width="600"/>
+
+---
+
+### 🛍️ Gestión de Productos
+<img src="https://github.com/user-attachments/assets/cbaf7e36-e656-4100-979e-d3684a7798d3" width="600"/>
+
+---
+
+### 📦 Gestión de Pedidos
+<img src="https://github.com/user-attachments/assets/b9ed2d87-1e83-4744-b6a5-541393ae5d8e" width="600"/>
 
 ---
 
@@ -68,3 +68,4 @@ El sistema está orientado a pequeñas empresas que buscan una solución simple 
 - **Agustín Domínguez**  
   💼 Estudiante y desarrollador web  
   🔗 [GitHub - agus-domi](https://github.com/agus-domi)
+  
