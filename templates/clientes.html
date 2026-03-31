@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,10 +8,11 @@
     <link rel="icon" type="image/png" href="{{ url_for('static', filename='Images/download.png') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='styletab.css') }}">
 </head>
+
 <body>
     <div class="pestaña">
         <div class="titulo">
-            <img src="{{ url_for('static', filename='Images/icono_clientes') }}" height="50">
+            <img src="{{ url_for('static', filename='Images/icono_clientes.png') }}" height="50">
             <h2>Clientes</h2>
         </div>
         <div>
@@ -35,43 +37,47 @@
                 <input type="submit" value="Agregar Cliente">
             </form>
         </div>
-    
+
         <div class="tabla">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>DNI</th>
-                            <th>Nombre</th>
-                            <th>Apellido</th>
-                            <th>Dirección</th>
-                            <th>Contacto</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for cliente in clientes %}
-                        <tr>
-                            <td>{{ cliente[1] }}</td> <!-- DNI -->
-                            <td>{{ cliente[2] }}</td> <!-- Nombre -->
-                            <td>{{ cliente[3] }}</td> <!-- Apellido -->
-                            <td>{{ cliente[4] }}</td> <!-- Dirección -->
-                            <td>{{ cliente[5] }}</td> <!-- Contacto -->
-                            <td class="modificar-col">
-                                <a class="modificar-btn" href="{{ url_for('editar_cliente_route', dni=cliente[1]) }}">Modificar</a>
-                            </td>
-                            <td class="eliminar-col">
-                                <form action="{{ url_for('eliminar_cliente_route', id_cliente=cliente[0]) }}" method="POST" style="display:inline;">
-                                    <button type="submit" class="eliminar-btn" onclick="return confirmarEliminacion()">Eliminar</button>
-                                </form>
-                            </td>
-                        </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
-        <div class="atras">
-            <a href="{{ url_for('index')}}">
-                <img src="{{ url_for('static', filename='Images/atras.png') }}" height="50">
-            </a>
+            <table>
+                <thead>
+                    <tr>
+                        <th>DNI</th>
+                        <th>Nombre</th>
+                        <th>Apellido</th>
+                        <th>Dirección</th>
+                        <th>Contacto</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for cliente in clientes %}
+                    <tr>
+                        <td>{{ cliente[1] }}</td> <!-- DNI -->
+                        <td>{{ cliente[2] }}</td> <!-- Nombre -->
+                        <td>{{ cliente[3] }}</td> <!-- Apellido -->
+                        <td>{{ cliente[4] }}</td> <!-- Dirección -->
+                        <td>{{ cliente[5] }}</td> <!-- Contacto -->
+                        <td class="modificar-col">
+                            <a class="modificar-btn"
+                                href="{{ url_for('editar_cliente_route', dni=cliente[1]) }}">Modificar</a>
+                        </td>
+                        <td class="eliminar-col">
+                            <form action="{{ url_for('eliminar_cliente_route', id_cliente=cliente[0]) }}" method="POST"
+                                style="display:inline;">
+                                <button type="submit" class="eliminar-btn"
+                                    onclick="return confirmarEliminacion()">Eliminar</button>
+                            </form>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <div class="atras">
+                <a href="{{ url_for('index')}}">
+                    <img src="{{ url_for('static', filename='Images/atras.png') }}" height="50">
+                </a>
+            </div>
         </div>
-    </div>
 </body>
+
 </html>
